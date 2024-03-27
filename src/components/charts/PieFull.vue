@@ -13,12 +13,13 @@ export default {
             
         }
     },
+    props:['title'],
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.pie1)
             let option = {
                 title:{
-                    text:"xxhh",
+                    text:this.title,
                     left:"center"
                 },
                 tooltip:{

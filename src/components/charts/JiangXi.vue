@@ -13,6 +13,7 @@ export default {
             myChart:''
         }
     },
+    props:['title'],
     methods:{
         setChart(){
             return new Promise((resolve,reject)=>{
@@ -37,7 +38,7 @@ export default {
             this.myChart.setOption(
                 (option = {
                     title:{
-                        text:'jiangxi'
+                        text:this.title
                     },
                     tooltip:{
                         trigger:'item',

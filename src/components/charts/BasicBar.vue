@@ -10,12 +10,13 @@ export default {
             myChart:'',
         }
     },
+    props:['title'],
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.bar)
             let option = {
                 title:{
-                    text:"biyefenbu",
+                    text:this.title,
                     left:"center"
                 },
                 grid: {

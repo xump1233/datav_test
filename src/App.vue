@@ -1,11 +1,16 @@
 <template>
   <div id="app">
-    <PieFull/>
+    <!-- <PieFull/>
     <BasicBar/>
     <ChinaMap/>
     <JiangXi/>
-    <GraphicBox title="xxhh"/>
-
+    <GraphicBox :title="dataList.title"/> -->
+    <template v-for="item,index in dataList.data">
+      <component :key="index" :is="gmap[item.type]" :title="item.title" v-if="!Array.isArray(item.data)"/>
+      <!-- <template v-else v-for="item2,index2 in item">
+        <component :key="index2" :is="gmap[item2.type]" :title="item.title" v-if="!Array.isArray(item.data)"></component>
+      </template> -->
+    </template>
   </div>
 </template>
 
@@ -21,7 +26,14 @@ export default {
   name: 'App',
   data(){
     return {
-      dataList:''
+      dataList:'',
+      name:'GraphicBox',
+      gmap:{
+        'pie':'PieFull',
+        'china':'ChinaMap',
+        'jiangxi':'JiangXi',
+        'bar':'BasicBar',
+      }
     }
   },
   components: {

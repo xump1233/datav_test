@@ -16,6 +16,7 @@ export default {
       }
     };
   },
+  props:['title'],
   methods: {
     setChart() {
       return new Promise((resolve, reject) => {
@@ -42,7 +43,7 @@ export default {
       this.myChart.setOption(
         (option = {
           title: {
-            text: "chinamap",
+            text: this.title,
             left: "center",
           },
           tooltip: {
