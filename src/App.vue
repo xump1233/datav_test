@@ -6,7 +6,7 @@
     <JiangXi/>
     <GraphicBox :title="dataList.title"/> -->
     <template v-for="item,index in dataList.data">
-      <component :key="index" :is="gmap[item.type]" :title="item.title" v-if="!Array.isArray(item.data)"/>
+      <component :key="index" :is="gmap[item.type]" :title="item.title" v-if="!Array.isArray(item.data)" :chartData="item['data']"/>
       <!-- <template v-else v-for="item2,index2 in item">
         <component :key="index2" :is="gmap[item2.type]" :title="item.title" v-if="!Array.isArray(item.data)"></component>
       </template> -->
@@ -43,6 +43,7 @@ export default {
     JiangXi,
     GraphicBox
   },
+  
   methods:{
     getData(){
       return new Promise((resolve,reject)=>{
