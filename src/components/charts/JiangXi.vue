@@ -10,10 +10,37 @@ export default {
     name:'JiangXi',
     data(){
         return {
-            myChart:''
+            myChart:'',
+            nameMap:{
+                "景德镇市":"景德镇市",
+                "九江市":"九江市",
+                "上饶市":"上饶市",
+                "鹰潭市":"鹰潭市",
+                "南昌市":"南昌市",
+                "新余市":"新余市",
+                "宜春市":"宜春市",
+                "萍乡市":"萍乡市",
+                "吉安市":"吉安市",
+                "抚州市":"抚州市",
+                "赣州市":"赣州市"
+            }
         }
     },
-    props:['title'],
+    props:['title','chartData'],
+    computed:{
+        formatData(){
+            const result = []
+            for(let key in this.nameMap){
+                const obj = {name:'',value:0}
+                obj.name = key
+                if( Object.prototype.hasOwnProperty.call(this.chartData, key)){
+                obj.value = this.chartData[key]
+                result.push(obj)
+                }
+            }
+            return result
+        }
+  },
     methods:{
         setChart(){
             return new Promise((resolve,reject)=>{
@@ -72,32 +99,8 @@ export default {
                             label:{
                                 show:true
                             },
-                            data:[
-                            { name: '赣州市', value: 817 },
-                            { name: '上饶市', value: 479 },
-                            { name: '宜春市', value: 473 },
-                            { name: '吉安市', value: 329 },
-                            { name: '南昌市', value: 312 },
-                            { name: '九江市', value: 310 },
-                            { name: '抚州市', value: 263 },
-                            { name: '萍乡市', value: 145 },
-                            { name: '景德镇市', value: 98 },
-                            { name: '新余市', value: 77 },
-                            { name: '鹰潭市', value: 52 }
-                            ],
-                            nameMap:{
-                                "景德镇市":"景德镇市",
-                                "九江市":"九江市",
-                                "上饶市":"上饶市",
-                                "鹰潭市":"鹰潭市",
-                                "南昌市":"南昌市",
-                                "新余市":"新余市",
-                                "宜春市":"宜春市",
-                                "萍乡市":"萍乡市",
-                                "吉安市":"吉安市",
-                                "抚州市":"抚州市",
-                                "赣州市":"赣州市"
-                            }
+                            data:this.formatData,
+                            nameMap:this.nameMap
                         }
                     ]
                 })

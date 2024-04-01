@@ -14,7 +14,6 @@ export default {
     computed:{
         formatData(){
             const result = [[],[]]
-            
             for(let key in this.chartData){
                 result[0].push(key)
                 result[1].push(this.chartData[key])
@@ -39,16 +38,17 @@ export default {
                     type: 'shadow'
                     }
                 },
-                xAxis:{
+                yAxis:{
                     type:'value'
                 },
-                yAxis:{
+                xAxis:{
                     type:'category',
                     data:this.formatData[0],
-                    // axisLabel: {
-                    //     interval: 0, // 强制显示所有标签
-                    //     // rotate: 45 // 旋转角度，可以根据需要调整
-                    // }
+                    axisLabel: {
+                        interval: 0, // 强制显示所有标签
+                        rotate: 90, // 设置旋转角度为90度，使标签文字竖直显示
+                        verticalAlign: 'middle' // 设置垂直对齐方式为居中
+                    }
                 },
                 series:[
                     {
@@ -58,7 +58,7 @@ export default {
                 ]
             }
             option && this.myChart.setOption(option);
-        }
+        },
     },
     mounted(){
         this.$refs.bar.style.width = "700px"

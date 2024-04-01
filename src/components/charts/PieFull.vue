@@ -13,7 +13,20 @@ export default {
             
         }
     },
-    props:['title'],
+    props:['title','chartData'],
+    computed:{
+        formatData(){
+            const result = []
+            for(let key in this.chartData){
+                const obj = {
+                    name:key,
+                    value:this.chartData[key]
+                }
+                result.push(obj)
+            }
+            return result
+        }
+    },
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.pie1)
@@ -31,23 +44,10 @@ export default {
                 },
                 series:[
                     {
-                        name:'xump',
+                        name:this.title,
                         type:'pie',
                         redius:'50%',
-                        data:[
-                            { value: 817, name: '赣州市' },
-                            { value: 479, name: '上饶市' },
-                            { value: 473, name: '宜春市' },
-                            { value: 329, name: '吉安市' },
-                            { value: 312, name: '南昌市' },
-                            { value: 310, name: '九江市' },
-                            { value: 263, name: '抚州市' },
-                            { value: 145, name: '萍乡市' },
-                            { value: 98, name: '景德镇市' },
-                            { value: 77, name: '新余市' },
-                            { value: 52, name: '鹰潭市' },
-                            { value: 30, name: '其他' }
-                        ],
+                        data:this.formatData,
                         emphasis:{
                             itemStyle:{
                                 shadowBlur: 10,
@@ -64,7 +64,6 @@ export default {
     mounted(){
         this.$refs.pie1.style.width = "1000px"
         this.$refs.pie1.style.height = "1000px"
-
         this.setChart()
     }
 }
