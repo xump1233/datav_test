@@ -69,6 +69,7 @@ export default {
 }
 .routerBox{
   display: flex;
+  justify-content: center;
 }
 .router{
   display: block;
