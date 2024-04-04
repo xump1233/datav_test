@@ -1,5 +1,5 @@
 <template>
-  <div ref="pie1">
+  <div ref="pie1" class="container">
 
   </div>
 </template>
@@ -47,6 +47,7 @@ export default {
                         name:this.title,
                         type:'pie',
                         redius:'50%',
+                        center:['50%','50%'],
                         data:this.formatData,
                         emphasis:{
                             itemStyle:{
@@ -62,13 +63,14 @@ export default {
         }
     },
     mounted(){
-        this.$refs.pie1.style.width = "1000px"
-        this.$refs.pie1.style.height = "1000px"
         this.setChart()
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+.container{
+    width:400px;
+    height:400px
+}
 </style>

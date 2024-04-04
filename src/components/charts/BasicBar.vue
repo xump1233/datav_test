@@ -1,5 +1,5 @@
 <template>
-  <div ref="bar"></div>
+  <div ref="bar" class="container"></div>
 </template>
 
 <script>
@@ -19,6 +19,14 @@ export default {
                 result[1].push(this.chartData[key])
             }
             return result
+        },
+        yAxisLength(){
+            if(Object.values(this.chartData).length > 5){
+                return 30
+            }
+            else{
+                return 0
+            }
         }
     },
     methods:{
@@ -30,7 +38,7 @@ export default {
                     left:"center"
                 },
                 grid: {
-                    left: '30%' // 设置左边偏移量为容器宽度的 20%
+                     // 设置左边偏移量为容器宽度的 20%
                 },
                 tooltip: {
                     trigger: 'axis',
@@ -44,10 +52,11 @@ export default {
                 xAxis:{
                     type:'category',
                     data:this.formatData[0],
-                    axisLabel: {
-                        interval: 0, // 强制显示所有标签
-                        rotate: 90, // 设置旋转角度为90度，使标签文字竖直显示
-                        verticalAlign: 'middle' // 设置垂直对齐方式为居中
+                    axisLabel: { 
+                        interval: 0, rotate: this.yAxisLength ,
+                        textStyle:{
+                            fontSize:10
+                        }
                     }
                 },
                 series:[
@@ -61,13 +70,15 @@ export default {
         },
     },
     mounted(){
-        this.$refs.bar.style.width = "700px"
-        this.$refs.bar.style.height = "500px"
+
         this.setChart()
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+.container{
+    width:400px;
+    height: 400px;
+}
 </style>
