@@ -27,6 +27,8 @@
     <FunnelChart title="月薪满意度" :chartData="chartd[14]"/>
     <BasicRadar title="对毕业生求职建议" :chartData="chartd[15]" :max="30"/>
     <BasicRadar title="单位对毕业生工作表现评价" :chartData="chartd[16]" :max="100"/>
+    <PieSet title="毕业生去向分布" :chartData="chartd[17]"/>
+    <FeatureBar :chartData="chartd[18]" title="民族生源结构"/>
   </div>
 </template>
 
@@ -42,6 +44,8 @@ import PieFull from './components/charts/PieFull.vue'
 import RadialPolarBar from './components/charts/RadialPolarBar.vue'
 import FunnelChart from './components/charts/FunnelChart.vue'
 import BasicRadar from './components/charts/BasicRadar.vue'
+import PieSet from './components/charts/PieSet.vue'
+import FeatureBar from './components/charts/FeatureBar.vue'
 // import GraphicBox from './components/GraphicBox.vue'
 import axios from 'axios'
 
@@ -57,7 +61,8 @@ export default {
                 "灵活就业率":1.12,
                 "暂不就业率":0.37,
                 "自主创业率":0.35
-            },{
+            },
+            {
                 "已经创业":1.15,
                 "有想法":23.81,
                 "没想法":75.03
@@ -207,6 +212,88 @@ export default {
                 "专业水平":95.19,
                 "工作态度":94.77,
                 "政治素养":93.72
+            },
+            [
+                {
+                    "title":"协议和合同就业",
+                    "data":{
+                        "签就业协议形式就业": 2812,
+                        "签劳动合同形式就业": 282,
+                        "应征义务兵": 24,
+                        "西部计划": 16,
+                        "三支一扶": 5,
+                        "其它（地方基层项目）": 3,
+                        "特岗教师（地方）": 2,
+                        "选调生": 1
+                    },
+                    "type":"Default arrangement"
+                },
+                {
+                    "title":"升学",
+                    "data":{
+                        "研究生": 1078,
+                        "出国、出境": 33,
+                        "第二学士学位": 1
+                    },
+                    "type":"Default arrangement"
+                },
+                {
+                    "title":"待就业",
+                    "data":{
+                        "求职中":720,
+                        "拟参加公招考试":10,
+                        "签约中":1
+                    },
+                    "type":"Default arrangement"
+                },
+                {
+                    "title":"灵活就业",
+                    "data":{
+                        "其他录用形式就业":46,
+                        "自由职业":11
+                    },
+                    "type":"Default arrangement"
+                },
+                {
+                    "title":"暂不就业",
+                    "data":{
+                        "不就业拟升学":14,
+                        "暂不就业":5
+                    },
+                    "type":"Default arrangement"
+                },
+                {
+                    "title":"自主创业",
+                    "data":{
+                        "自主创业":18
+                    },
+                    "type":"Default arrangement"
+                }
+            ],
+            {
+                "汉族": 4928,
+                "土家族": 23,
+                "壮族": 18,
+                "满族": 15,
+                "苗族": 15,
+                "回族": 13,
+                "畲族": 13,
+                "蒙古族": 11,
+                "藏族": 8,
+                "侗族": 6,
+                "白族": 5,
+                "仡佬族": 4,
+                "彝族": 4,
+                "水族": 4,
+                "布依族": 3,
+                "瑶族": 3,
+                "维吾尔族": 2,
+                "黎族": 2,
+                "傣族": 1,
+                "哈萨克族": 1,
+                "土族": 1,
+                "拉祜族": 1,
+                "达斡尔族": 1
             }
             ],
       dataList:'',
@@ -229,7 +316,9 @@ export default {
     PieFull,
     RadialPolarBar,
     FunnelChart,
-    BasicRadar
+    BasicRadar,
+    PieSet,
+    FeatureBar
 
   },
   
