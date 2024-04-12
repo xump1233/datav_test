@@ -49,6 +49,77 @@ export default {
     };
   },
   props:['title','chartData'],
+      watch:{
+        chartData(){
+            this.setChart().then((value) => {
+          var option;
+          this.myChart.hideLoading();
+          this.$echarts.registerMap("China", value);
+          this.myChart.setOption(
+            (option = {
+              title: {
+                text: this.title,
+                left: "center",
+              },
+              tooltip: {
+                trigger: "item",
+                formatter: "{b}<br/>{c}",
+              },
+              toolbox: {
+                show: false,
+                orient: "vertical",
+                left: "right",
+                top: "center",
+                feature: {
+                  dataView: { readOnly: false },
+                  restore: {},
+                  savaAsImage: {},
+                },
+              },
+              visualMap: {
+                type: "piecewise",
+                min: 0,
+                max: 4000,
+                splitNumber: 8,
+                pieces: [
+                  { min: 0, max: 0, color: "white" }, 
+                  { min: 1, max: 10, color: "skyblue" }, 
+                  { min: 10, max: 30, color: "#ffa500" },
+                  { min: 30, max: 50, color: "#80f460" },
+                  { min: 50, max: 100, color: "#c3d461" }, 
+                  { min: 100, max: 150, color: "#00FF00" },
+                  { min: 150, max: 200, color: "#0000FF" }, 
+                  { min: 1000, max: 4000, color: "red" },
+                ],
+                left:'30',
+                top:'0'
+
+              },
+              series: [
+                {
+                  name: "china",
+                  type: "map",
+                  map: "China",
+                  center:[91.195397, 35.86166],
+                  zoom:1.7,
+                  // roam: true,
+                  label: {
+                    show: true,
+                    fontSize:6,
+                    color:'#666'
+                  },
+                  data: this.formatData,
+                  nameMap: this.nameMap,
+                },
+              ],
+            }),
+            
+          );
+          option && this.myChart.setOption(option);
+        
+      });
+        }
+    },
   computed:{
     formatData(){
       const result = []
@@ -80,76 +151,82 @@ export default {
     },
   },
   created() {
-    this.setChart().then((value) => {
-      this.myChart = this.$echarts.init(this.$refs.map);
-      this.myChart.showLoading();
-      var option;
-      this.myChart.hideLoading();
-      this.$echarts.registerMap("China", value);
-      this.myChart.setOption(
-        (option = {
-          title: {
-            text: this.title,
-            left: "center",
-          },
-          tooltip: {
-            trigger: "item",
-            formatter: "{b}<br/>{c}",
-          },
-          toolbox: {
-            show: true,
-            orient: "vertical",
-            left: "right",
-            top: "center",
-            feature: {
-              dataView: { readOnly: false },
-              restore: {},
-              savaAsImage: {},
-            },
-          },
-          visualMap: {
-            type: "piecewise",
-            min: 0,
-            max: 4000,
-            splitNumber: 8,
-            pieces: [
-              { min: 0, max: 0, color: "white" }, 
-              { min: 1, max: 10, color: "skyblue" }, 
-              { min: 10, max: 30, color: "#ffa500" },
-              { min: 30, max: 50, color: "#80f460" },
-              { min: 50, max: 100, color: "#c3d461" }, 
-              { min: 100, max: 150, color: "#00FF00" },
-              { min: 150, max: 200, color: "#0000FF" }, 
-              { min: 1000, max: 4000, color: "red" },
-            ],
-            left: 200, // 距离容器右侧的距离
-            top: 100, // 距
-
-          },
-          series: [
-            {
-              name: "china",
-              type: "map",
-              map: "China",
-              roam: true,
-              label: {
-                show: true,
-                fontSize:10
-              },
-              data: this.formatData,
-              nameMap: this.nameMap,
-            },
-          ],
-        }),
-        
-      );
-      option && this.myChart.setOption(option);
-      
-    });
+    
   },
   mounted() {
-    this.$refs.map.style.width = "100%";
-    this.$refs.map.style.height = "700px";
+    this.myChart = this.$echarts.init(this.$refs.map);
+    if(!this.title){
+      this.myChart.showLoading();
+    }
+    else{
+      this.setChart().then((value) => {
+        var option;
+        this.myChart.hideLoading();
+        this.$echarts.registerMap("China", value);
+        this.myChart.setOption(
+          (option = {
+            title: {
+              text: this.title,
+              left: "center",
+            },
+            tooltip: {
+              trigger: "item",
+              formatter: "{b}<br/>{c}",
+            },
+            toolbox: {
+              show: false,
+              orient: "vertical",
+              left: "right",
+              top: "center",
+              feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                savaAsImage: {},
+              },
+            },
+            visualMap: {
+              type: "piecewise",
+              min: 0,
+              max: 4000,
+              splitNumber: 8,
+              pieces: [
+                { min: 0, max: 0, color: "white" }, 
+                { min: 1, max: 10, color: "skyblue" }, 
+                { min: 10, max: 30, color: "#ffa500" },
+                { min: 30, max: 50, color: "#80f460" },
+                { min: 50, max: 100, color: "#c3d461" }, 
+                { min: 100, max: 150, color: "#00FF00" },
+                { min: 150, max: 200, color: "#0000FF" }, 
+                { min: 1000, max: 4000, color: "red" },
+              ],
+              left:'30',
+              top:'0'
+
+            },
+            series: [
+              {
+                name: "china",
+                type: "map",
+                map: "China",
+                center:[91.195397, 35.86166],
+                zoom:1.7,
+                // roam: true,
+                label: {
+                  show: true,
+                  fontSize:6,
+                  color:'#666'
+                },
+                data: this.formatData,
+                nameMap: this.nameMap,
+              },
+            ],
+          }),
+          
+        );
+        option && this.myChart.setOption(option);
+        
+      });
+    }
   },
 };
 </script>

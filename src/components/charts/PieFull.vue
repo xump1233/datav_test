@@ -14,6 +14,11 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             const result = []
@@ -30,36 +35,42 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.pie1)
-            let option = {
-                title:{
-                    text:this.title,
-                    left:"center"
-                },
-                tooltip:{
-                    trigger:'item'
-                },
-                legend:{
-                    orient:'vertical',
-                    left:'left'
-                },
-                series:[
-                    {
-                        name:this.title,
-                        type:'pie',
-                        redius:'50%',
-                        center:['50%','50%'],
-                        data:this.formatData,
-                        emphasis:{
-                            itemStyle:{
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            if(!this.title){
+                this.myChart.showLoading();
+            }
+            else{
+                this.myChart.hideLoading();
+                let option = {
+                    title:{
+                        text:this.title,
+                        left:"center"
+                    },
+                    tooltip:{
+                        trigger:'item'
+                    },
+                    // legend:{
+                    //     orient:'vertical',
+                    //     left:'left'
+                    // },
+                    series:[
+                        {
+                            name:this.title,
+                            type:'pie',
+                            redius:'50%',
+                            center:['50%','50%'],
+                            data:this.formatData,
+                            emphasis:{
+                                itemStyle:{
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
                             }
                         }
-                    }
-                ]
+                    ]
+                }
+                option && this.myChart.setOption(option);
             }
-            option && this.myChart.setOption(option);
         }
     },
     mounted(){

@@ -27,69 +27,93 @@ export default {
             return result
         },
     },
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.bar)
-            let option = {
-                title:{
-                    text:this.title,
-                    left:"center"
-                },
-                tooltip: {
-                    trigger: 'item',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                series:[
-                    {
-                        name:this.chartData[0].title,
-                        radius:'17%',
-                        center:["17%","20%"],
-                        data:this.formatData[0],
-                        type:'pie'
-                    },
-                    {
-                        name:this.chartData[1].title,
-                        type:'pie',
-                        radius:'17%',
-                        center:["51%","20%"],
-                        data:this.formatData[1]
-                    },
-                    {
-                        name:this.chartData[2].title,
-                        radius:'17%',
-                        center:["83%","20%"],
-                        data:this.formatData[2],
-                        type:'pie'
-                    },
-                    {
-                        name:this.chartData[3].title,
-                        radius:'17%',
-                        center:["17%","50%"],
-                        data:this.formatData[3],
-                        type:'pie'
-                    },
-                    {
-                        name:this.chartData[4].title,
-                        radius:'17%',
-                        center:["51%","50%"],
-                        data:this.formatData[4],
-                        type:'pie'
-                    },
-                    {
-                        name:this.chartData[5].title,
-                        radius:'17%',
-                        center:["83%","50%"],
-                        data:this.formatData[5],
-                        type:'pie'
-                    },
-                ]
+            if(!this.title || !this.chartData){
+                this.myChart.showLoading();
+                return
             }
-            option && this.myChart.setOption(option);
+            else{
+                let target = 0
+                if(!this.chartData) return
+                for (let i = 0; i < this.chartData.length; i++) {
+                    const item = this.chartData[i];
+                    if (!item.title) {
+                        target += 1
+                    }
+                    
+                }
+                if(target>0) return
+                
+                this.myChart.hideLoading();
+                let option = {
+                    title:{
+                        text:this.title,
+                        left:"center"
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    series:[
+                        {
+                            name:this.chartData[0].title,
+                            radius:'20%',
+                            center:["17%","27%"],
+                            data:this.formatData[0],
+                            type:'pie'
+                        },
+                        {
+                            name:this.chartData[1].title,
+                            type:'pie',
+                            radius:'20%',
+                            center:["51%","27%"],
+                            data:this.formatData[1]
+                        },
+                        {
+                            name:this.chartData[2].title,
+                            radius:'20%',
+                            center:["83%","27%"],
+                            data:this.formatData[2],
+                            type:'pie'
+                        },
+                        {
+                            name:this.chartData[3].title,
+                            radius:'20%',
+                            center:["17%","65%"],
+                            data:this.formatData[3],
+                            type:'pie'
+                        },
+                        {
+                            name:this.chartData[4].title,
+                            radius:'21`%',
+                            center:["51%","65%"],
+                            data:this.formatData[4],
+                            type:'pie'
+                        },
+                        {
+                            name:this.chartData[5].title,
+                            radius:'20%',
+                            center:["83%","65%"],
+                            data:this.formatData[5],
+                            type:'pie'
+                        },
+                    ]
+                }
+                option && this.myChart.setOption(option);
+            }
         },
     },
     mounted(){
+        console.log(this.title)
         this.setChart()
     }
 }

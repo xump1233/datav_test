@@ -11,6 +11,11 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             const result = [[],[]]
@@ -24,38 +29,48 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.bar)
-            let option = {
-                title: [
-                    {
-                    text: this.title,
-                    left:'center'
-                    }
-                ],
-                polar: {
-                    radius: [30, '80%']
-                },
-                radiusAxis: {
-                    max: 40
-                },
-                angleAxis: {
-                    type: 'category',
-                    data: this.formatData[0],
-                    startAngle: 75
-                },
-                tooltip: {},
-                series: {
-                    type: 'bar',
-                    data: this.formatData[1],
-                    coordinateSystem: 'polar',
-                    label: {
-                        show: true,
-                        position: 'outside',
-                        formatter: '{b}: {c}',
-                    }
-                },
-                animation: false
+            if(!this.title){
+                this.myChart.showLoading();
             }
-            option && this.myChart.setOption(option);
+            else{
+                this.myChart.hideLoading();
+                let option = {
+                    title: [
+                        {
+                        text: this.title,
+                        left:'left'
+                        }
+                    ],
+                    polar: {
+                        radius: [20, '75%']
+                    },
+                    radiusAxis: {
+                        max: 40
+                    },
+                    angleAxis: {
+                        show:false,
+                        type: 'category',
+                        data: this.formatData[0],
+                        startAngle: 75
+                    },
+                    tooltip: {},
+                    grid:{
+                        left: '10%',    // 图表距离容器左侧的距离
+                    },
+                    series: {
+                        type: 'bar',
+                        data: this.formatData[1],
+                        coordinateSystem: 'polar',
+                        label: {
+                            show: true,
+                            position: 'outside',
+                            formatter: '{b}: {c}',
+                        }
+                    },
+                    animation: false
+                }
+                option && this.myChart.setOption(option);
+            }
         },
     },
     mounted(){

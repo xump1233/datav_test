@@ -27,6 +27,64 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart().then(value=>{
+                this.myChart = this.$echarts.init(this.$refs.map)
+                this.myChart.showLoading()
+                this.myChart.hideLoading()
+                this.$echarts.registerMap('JX',value)
+                let option
+                this.myChart.setOption(
+                    (option = {
+                        title:{
+                            text:this.title
+                        },
+                        tooltip:{
+                            trigger:'item',
+                            formatter:'{b}<br/>{c}'
+                        },
+                        toolbox:{
+                            show:false,
+                            orient:'vertical',
+                            left:'center',
+                            feature:{
+                                dataView:{readOnly:false},
+                                restore:{},
+                                savaAsImage:{}
+                            }
+                        },
+                        visualMap:{
+                            min: 0,
+                            max: 1000,
+                            text: ['人数较多', '人数较少'],
+                            realtime: false,
+                            itemWidth: 10,
+                            itemHeight: 70,
+                            calculable: true,
+                            inRange: {
+                            color: ['lightskyblue', 'yellow', 'orangered']
+                            }
+                        },
+                        series:[
+                            {
+                                name:'jx',
+                                type:'map',
+                                map:'JX',
+                                zoom:1.2,
+                                label:{
+                                    show:true
+                                },
+                                data:this.formatData,
+                                nameMap:this.nameMap
+                            }
+                        ]
+                    })
+                )
+                option && this.myChart.setOption(option)
+            })
+        }
+    },
     computed:{
         formatData(){
             const result = []
@@ -56,62 +114,69 @@ export default {
         }
     },
     created(){
-        this.setChart().then(value=>{
-            this.myChart = this.$echarts.init(this.$refs.map)
-            this.myChart.showLoading()
-            this.myChart.hideLoading()
-            this.$echarts.registerMap('JX',value)
-            let option
-            this.myChart.setOption(
-                (option = {
-                    title:{
-                        text:this.title
-                    },
-                    tooltip:{
-                        trigger:'item',
-                        formatter:'{b}<br/>{c}'
-                    },
-                    toolbox:{
-                        show:true,
-                        orient:'vertical',
-                        left:'center',
-                        feature:{
-                            dataView:{readOnly:false},
-                            restore:{},
-                            savaAsImage:{}
-                        }
-                    },
-                    visualMap:{
-                        min: 0,
-                        max: 1000,
-                        text: ['High', 'Low'],
-                        realtime: false,
-                        calculable: true,
-                        inRange: {
-                        color: ['lightskyblue', 'yellow', 'orangered']
-                        }
-                    },
-                    series:[
-                        {
-                            name:'jx',
-                            type:'map',
-                            map:'JX',
-                            label:{
-                                show:true
-                            },
-                            data:this.formatData,
-                            nameMap:this.nameMap
-                        }
-                    ]
-                })
-            )
-            option && this.myChart.setOption(option)
-        })
         
     },
     mounted(){
-        this.$refs.map.style.width = "100%"
-        this.$refs.map.style.height = "500px"
+        if(!this.title){
+            this.myChart = this.$echarts.init(this.$refs.map)
+            this.myChart.showLoading()
+        }
+        else{
+            this.setChart().then(value=>{
+                this.myChart = this.$echarts.init(this.$refs.map)
+                this.myChart.showLoading()
+                this.myChart.hideLoading()
+                this.$echarts.registerMap('JX',value)
+                let option
+                this.myChart.setOption(
+                    (option = {
+                        title:{
+                            text:this.title
+                        },
+                        tooltip:{
+                            trigger:'item',
+                            formatter:'{b}<br/>{c}'
+                        },
+                        toolbox:{
+                            show:false,
+                            orient:'vertical',
+                            left:'center',
+                            feature:{
+                                dataView:{readOnly:false},
+                                restore:{},
+                                savaAsImage:{}
+                            }
+                        },
+                        visualMap:{
+                            min: 0,
+                            max: 1000,
+                            text: ['人数较多', '人数较少'],
+                            realtime: false,
+                            itemWidth: 10,
+                            itemHeight: 70,
+                            calculable: true,
+                            inRange: {
+                            color: ['lightskyblue', 'yellow', 'orangered']
+                            }
+                        },
+                        series:[
+                            {
+                                name:'jx',
+                                type:'map',
+                                map:'JX',
+                                zoom:1.2,
+                                label:{
+                                    show:true
+                                },
+                                data:this.formatData,
+                                nameMap:this.nameMap
+                            }
+                        ]
+                    })
+                )
+                option && this.myChart.setOption(option)
+        })
+        }
     }
 }
 </script>

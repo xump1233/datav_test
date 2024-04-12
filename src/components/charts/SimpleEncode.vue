@@ -10,15 +10,20 @@ export default {
             myChart:'',
         }
     },
-    props:['title','chartData','total'],
+    props:['title','chartData','other'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             let result = []
             for(let key in this.chartData){
-                result.push([this.chartData[key],Math.round(this.total*this.chartData[key]/100),key])
+                result.push([this.chartData[key],Math.round(this.other[0]*this.chartData[key]/100),key])
             }
             result = this.shuffleArray(result)
-            result.unshift(['score', 'amount', 'product'])
+            result.unshift(['score', '总计', 'product'])
             return result
         }
     },
@@ -32,42 +37,53 @@ export default {
         },
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.bar)
-            let option = {
-                title:{
-                    text:this.title,
-                    left:'center'
-                },
-                dataset: {
-                    source: this.formatData
-                },
-                grid: { containLabel: true },
-                xAxis: { name: 'amount' },
-                yAxis: { type: 'category' },
-                visualMap: {
-                    orient: 'horizontal',
-                    left: 'center',
-                    min: 0,
-                    max: 50,
-                    text: ['选择较多', '选择较少'],
-                    // Map the score column to color
-                    dimension: 0,
-                    inRange: {
-                    color: ['#65B581', '#FFCE34', '#FD665F']
-                    }
-                },
-                series: [
-                    {
-                    type: 'bar',
-                    encode: {
-                        // Map the "amount" column to X axis.
-                        x: 'amount',
-                        // Map the "product" column to Y axis
-                        y: 'product'
-                    }
-                    }
-                ]
+            if(!this.title){
+                this.myChart.showLoading();
             }
-            option && this.myChart.setOption(option);
+            else{
+                this.myChart.hideLoading();
+                let option = {
+                    title:{
+                        text:this.title,
+                        left:'center'
+                    },
+                    dataset: {
+                        source: this.formatData
+                    },
+                    grid: { 
+                        containLabel: true,
+                        left:'0'
+                    },
+
+                    xAxis: { name: '总计' },
+                    yAxis: { type: 'category' },
+                    visualMap: {
+                        orient: 'horizontal',
+                        left: 'center',
+                        min: 0,
+                        max: 50,
+                        text: ['较多', '较少'],
+                        // Map the score column to color
+                        dimension: 0,
+                        inRange: {
+                        color: ['#65B581', '#FFCE34', '#FD665F']
+                        }
+                    },
+                    series: [
+                        {
+                        type: 'bar',
+                        barWidth:20,
+                        encode: {
+                            // Map the "amount" column to X axis.
+                            x: '总计',
+                            // Map the "product" column to Y axis
+                            y: 'product'
+                        }
+                        }
+                    ]
+                }
+                option && this.myChart.setOption(option);
+            }
         },
     },
     mounted(){

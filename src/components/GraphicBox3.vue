@@ -1,5 +1,5 @@
 <template>
-  <div class="container" ref="container">
+  <div class="containerBox" ref="container">
     <!-- <h1 style="width:100%">{{title}}</h1> -->
     <!-- <template v-for="item in dataList">
       <component v-if="item.isParent === 0 && item.data" :is="item.type" :key="item.id" :chartData="item.data" :title="item.childrenName" :other="JSON.parse(item.other)"  class="addBorder"/>
@@ -15,21 +15,6 @@
           :other="JSON.parse(getIndex(n,m).other)"  
           class="addBorder" 
           :style="{width:getIndex(n,m).position[2]+'%',height:100+'%'}"
-          />
-          <PieSet v-if="getIndex(n,m).isParent === 1" 
-          :key="m+100" 
-          :chartData="formatChild" 
-          title="毕业生去向分布" 
-          class="addBorder" 
-          :style="{width:getIndex(n,m).position[2]+'%',height:100+'%'}"
-          />
-          <component 
-          v-if="getIndex(n,m).type ==='RatePie'" 
-          :is="getIndex(n,m).type" :key="m+100" 
-          :chartData="getIndex(n,m).data" 
-          :title="getIndex(n,m).childrenName" 
-          :other="JSON.parse(getIndex(n,m).other)"  
-          class="addBorder"
           />
         </template>
       </div>
@@ -230,7 +215,7 @@ export default {
     getMaxColumn(n){
       let max = 0
       this.dataList.forEach(item=>{
-        if(item.position[0] === n || item.position[1] > max)
+        if(item.position[0] === n && item.position[1] > max)
           max = item.position[1]
       })
       return max
@@ -272,7 +257,6 @@ export default {
     })
   },
   mounted(){
-    // console.log(this)
     console.log(this.title,'挂载完毕')
     this.$refs.container.style.flexDirection = this.myPosition
 
@@ -284,13 +268,14 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.containerBox{
   display: flex;
   flex-wrap: wrap;
   /* flex-direction: row; */
   justify-content: space-around;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 .addBorder{
   /* border:1px solid skyblue; */

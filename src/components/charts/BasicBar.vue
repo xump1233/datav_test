@@ -11,6 +11,11 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             const result = [[],[]]
@@ -32,41 +37,51 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.bar)
-            let option = {
-                title:{
-                    text:this.title,
-                    left:"center"
-                },
-                grid: {
-                     // 设置左边偏移量为容器宽度的 20%
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                    type: 'shadow'
-                    }
-                },
-                yAxis:{
-                    type:'value'
-                },
-                xAxis:{
-                    type:'category',
-                    data:this.formatData[0],
-                    axisLabel: { 
-                        interval: 0, rotate: this.yAxisLength ,
-                        textStyle:{
-                            fontSize:10
-                        }
-                    }
-                },
-                series:[
-                    {
-                        data:this.formatData[1],
-                        type:'bar'
-                    }
-                ]
+            // this.myChart = this.$echarts.init(this.$refs.bar, 'dark');
+            if(!this.title){
+                this.myChart.showLoading();
             }
-            option && this.myChart.setOption(option);
+            else{
+                let option = {
+                    title:{
+                        text:this.title,
+                        left:"center",
+                        textStyle:{
+                            fontSize:16
+                        }
+                    },
+                    grid: {
+                        // 设置左边偏移量为容器宽度的 20%
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                        type: 'shadow'
+                        }
+                    },
+                    yAxis:{
+                        type:'value'
+                    },
+                    xAxis:{
+                        
+                        type:'category',
+                        data:this.formatData[0],
+                        axisLabel: { 
+                            interval: 0, rotate: this.yAxisLength ,
+                            textStyle:{
+                                fontSize:10
+                            }
+                        }
+                    },
+                    series:[
+                        {
+                            data:this.formatData[1],
+                            type:'bar'
+                        }
+                    ]
+                }
+                option && this.myChart.setOption(option);
+            }
         },
     },
     mounted(){
@@ -80,5 +95,6 @@ export default {
 .container{
     width:400px;
     height: 400px;
+    padding:100px,0;
 }
 </style>

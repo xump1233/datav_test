@@ -11,6 +11,11 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             const result = []
@@ -23,46 +28,59 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.pie)
-            let option = {
-                title: {
-                    text: this.title,
-
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
-                },
-                legend: {
-                    left: 'center',
-                    top: 'bottom',
-                    data: this.formatData.map(item=>item.name)
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                    mark: { show: true },
-                    dataView: { show: true, readOnly: false },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                    }
-                },
-                series: [
-                    {
-                    name: this.title,
-                    type: 'pie',
-                    roma:true,
-                    radius: [20, 140],
-                    center: ['50%', '50%'],
-                    roseType: 'area',
-                    itemStyle: {
-                        borderRadius: 5
-                    },
-                    data: this.formatData
-                    }
-                ]
+            if(!this.title){
+                this.myChart.showLoading();
             }
-            option && this.myChart.setOption(option);
+            else{
+                this.myChart.hideLoading();
+                let option = {
+                    title: {
+                        text: this.title,
+
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        show:true,
+                        left: 'left',
+                        top: '20',
+                        orient: 'vertical',
+                        data: this.formatData.map(item=>item.name)
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                        }
+                    },
+                    series: [
+                        {
+                        name: this.title,
+                        type: 'pie',
+                        roma:true,
+                        radius: [30, 150],
+                        center: ['50%', '65%'],
+                        label:{
+                            position:'inside',
+                            show:false
+                        },
+                        roseType: 'area',
+                        itemStyle: {
+                            borderRadius: 5
+                        },
+                        data: this.formatData
+                        }
+                    ]
+                }
+                option && this.myChart.setOption(option);
+            }
+            
         },
     },
     mounted(){

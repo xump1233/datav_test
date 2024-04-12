@@ -14,6 +14,11 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             const result = []
@@ -30,32 +35,38 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.pie1)
-            let option = {
-                title:{
-                    text:this.title,
-                    left:'center'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    top: '5%',
-                    left: 'center',
-                },
-                series: [
-                    {
-                    name: this.title,
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    center: ['50%', '50%'],
-                    // adjust the start and end angle
-                    startAngle: 180,
-                    endAngle: 360,
-                    data: this.formatData
-                    }
-                ]
+            if(!this.title){
+                this.myChart.showLoading();
             }
-            option && this.myChart.setOption(option);
+            else{
+                let option = {
+                    title:{
+                        text:this.title,
+                        left:'center'
+                    },
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    legend: {
+                        top: '20%',
+                        left: 'center',
+
+                    },
+                    series: [
+                        {
+                        name: this.title,
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        center: ['50%', '90%'],
+                        // adjust the start and end angle
+                        startAngle: 180,
+                        endAngle: 360,
+                        data: this.formatData
+                        }
+                    ]
+                }
+                option && this.myChart.setOption(option);
+            }
         }
     },
     mounted(){

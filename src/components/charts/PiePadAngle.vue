@@ -13,6 +13,11 @@ export default {
         }
     },
     props:['title','chartData'],
+    watch:{
+        chartData(){
+            this.setChart()
+        }
+    },
     computed:{
         formatData(){
             const result = []
@@ -29,47 +34,57 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.pie1)
-            let option = {
-                title:{
-                    text:this.title,
-                    left:'center'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    top: '5%',
-                    left: 'center'
-                },
-                series: [
-                    {
-                    name: this.title,
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    avoidLabelOverlap: false,
-                    padAngle: 5,
-                    itemStyle: {
-                        borderRadius: 10
+            if(!this.title){
+                this.myChart.showLoading();
+            }
+            else{
+                this.myChart.hideLoading();
+                let option = {
+                    title:{
+                        text:this.title,
+                        left:'center'
                     },
-                    label: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        label: {
-                        show: true,
-                        fontSize: 24,
-                        fontWeight: 'bold'
+                    tooltip: {
+                        trigger: 'item',
+                        formatter:(params) =>{
+                            return ''+params.name + ' : '+params.value+'%';
                         }
                     },
-                    labelLine: {
-                        show: false
+                    legend: {
+                        top: '5%',
+                        left: 'left',
+                        orient: 'vertical',
                     },
-                    data: this.formatData
-                    }
-                ]
+                    series: [
+                        {
+                        name: this.title,
+                        type: 'pie',
+                        radius: ['40%', '80%'],
+                        avoidLabelOverlap: false,
+                        padAngle: 5,
+                        itemStyle: {
+                            borderRadius: 10
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                            show: true,
+                            fontSize: 16,
+                            fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: this.formatData
+                        }
+                    ]
+                }
+                option && this.myChart.setOption(option);
             }
-            option && this.myChart.setOption(option);
         }
     },
     mounted(){
