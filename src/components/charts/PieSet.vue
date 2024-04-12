@@ -46,8 +46,7 @@ export default {
                     const item = this.chartData[i];
                     if (!item.title) {
                         target += 1
-                    }
-                    
+                    }   
                 }
                 if(target>0) return
                 
