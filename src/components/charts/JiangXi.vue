@@ -88,12 +88,14 @@ export default {
     computed:{
         formatData(){
             const result = []
-            for(let key in this.nameMap){
-                const obj = {name:'',value:0}
-                obj.name = key
-                if( Object.prototype.hasOwnProperty.call(this.chartData, key)){
-                obj.value = this.chartData[key]
-                result.push(obj)
+            if(this.chartData){
+                for(let key in this.nameMap){
+                    const obj = {name:'',value:0}
+                    obj.name = key
+                    if( Object.prototype.hasOwnProperty.call(this.chartData, key)){
+                    obj.value = this.chartData[key]
+                    result.push(obj)
+                    }
                 }
             }
             return result

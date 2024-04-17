@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <HeadTop/>
+    <OneTip/>
     <div class="routerBox">
       <router-link v-for="item in dataList" class="router" :key="item.id" active-class="onClickRouter" :to="{
         name:cmap[item.childrenName],
@@ -17,6 +18,7 @@
 <script>
 import axios from 'axios'
 import HeadTop from './components/HeadTop.vue'
+import OneTip from './components/OneTip.vue'
 
 export default {
   name: 'App',
@@ -33,6 +35,7 @@ export default {
   components: {
     // GraphicBox
     HeadTop,
+    OneTip
   },
   
   methods:{
