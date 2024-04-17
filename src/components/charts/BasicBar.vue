@@ -8,9 +8,10 @@ export default {
     data(){
         return {
             myChart:'',
+            // isTop:false
         }
     },
-    props:['title','chartData'],
+    props:['title','chartData','isTop'],
     watch:{
         chartData(){
             this.setChart()
@@ -19,13 +20,16 @@ export default {
     computed:{
         formatData(){
             const result = [[],[]]
-            for(let key in this.chartData){
-                result[0].push(key)
-                result[1].push(this.chartData[key])
+            if(this.chartData){
+                for(let key in this.chartData){
+                    result[0].push(key)
+                    result[1].push(this.chartData[key])
+                }
             }
             return result
         },
         yAxisLength(){
+            if(!this.chartData) return 30
             if(Object.values(this.chartData).length > 5){
                 return 30
             }
@@ -37,7 +41,6 @@ export default {
     methods:{
         setChart(){
             this.myChart = this.$echarts.init(this.$refs.bar)
-            // this.myChart = this.$echarts.init(this.$refs.bar, 'dark');
             if(!this.title){
                 this.myChart.showLoading();
             }
@@ -63,7 +66,6 @@ export default {
                         type:'value'
                     },
                     xAxis:{
-                        
                         type:'category',
                         data:this.formatData[0],
                         axisLabel: { 
@@ -81,11 +83,14 @@ export default {
                     ]
                 }
                 option && this.myChart.setOption(option);
+                this.myChart.on('click',(e)=>{
+                    e.event.cancelBubble = true
+                    this.$bus.$emit('getChart',{name:this.$options.name,title:this.title,chartData:this.chartData,other:this.other || ''})
+                })
             }
         },
     },
     mounted(){
-
         this.setChart()
     }
 }

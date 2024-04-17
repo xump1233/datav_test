@@ -48,7 +48,7 @@ export default {
               }
     };
   },
-  props:['title','chartData'],
+  props:['title','chartData','isTop'],
       watch:{
         chartData(){
             this.setChart().then((value) => {
@@ -141,7 +141,7 @@ export default {
     setChart() {
       return new Promise((resolve, reject) => {
         axios
-          .get("https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json")
+          .get("http://xump.cn/datav/china")
           .then(
             (res) => {
               resolve(res.data);
@@ -164,31 +164,8 @@ export default {
     else{
       this.setChart().then((value) => {
         var option;
-        this.myChart.hideLoading();
-        this.$echarts.registerMap("China", value);
-        this.myChart.setOption(
-          (option = {
-            title: {
-              text: this.title,
-              left: "center",
-            },
-            tooltip: {
-              trigger: "item",
-              formatter: "{b}<br/>{c}",
-            },
-            toolbox: {
-              show: false,
-              orient: "vertical",
-              left: "right",
-              top: "center",
-              feature: {
-                dataView: { readOnly: false },
-                restore: {},
-                savaAsImage: {},
-              },
-            },
-            visualMap: {
-              type: "piecewise",
+        const vmap = {
+          type: "piecewise",
               min: 0,
               max: 4000,
               splitNumber: 8,
@@ -203,17 +180,40 @@ export default {
                 { min: 1000, max: 4000, color: "red" },
               ],
               left:'30',
-              top:'0'
-
+              top:'20'
+        }
+        this.myChart.hideLoading();
+        this.$echarts.registerMap("China", value);
+        this.myChart.setOption(
+          (option = {
+            title: {
+              text: this.title,
+              left: "center",
             },
+            tooltip: {
+              trigger: "item",
+              formatter: "{b}<br/>{c}人",
+            },
+            toolbox: {
+              show: false,
+              orient: "vertical",
+              left: "right",
+              top: "center",
+              feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                savaAsImage: {},
+              },
+            },
+            visualMap: this.isTop?{left:'30',top:'20'}:vmap,
             series: [
               {
                 name: "china",
                 type: "map",
                 map: "China",
-                center:[91.195397, 35.86166],
+                center:this.isTop?[102.195397, 35.86166]:[91.195397, 35.86166],
                 zoom:1.7,
-                // roam: true,
+                roam: this.isTop,
                 label: {
                   show: true,
                   fontSize:6,
@@ -230,9 +230,18 @@ export default {
         
       });
     }
-    this.myChart.on('click',()=>{
-      this.$bus.$emit('getChart',this.title)
-    })
+    if(this.isTop){
+        this.myChart.on('click',(e)=>{
+          e.event.cancelBubble = true
+          console.log('我被点击了')
+        })
+    }
+    else{
+      this.myChart.on('click',(e)=>{
+        e.event.cancelBubble = true
+        this.$bus.$emit('getChart',{name:this.$options.name,title:this.title,chartData:this.chartData})
+      })
+    }
   },
 };
 </script>

@@ -10,7 +10,7 @@ export default {
             myChart:'',
         }
     },
-    props:['title','chartData'],
+    props:['title','chartData','isTop'],
     watch:{
         chartData(){
             this.setChart()
@@ -137,6 +137,10 @@ export default {
                     });
                 });
                 option && this.myChart.setOption(option);
+                this.myChart.on('dblclick',(e)=>{
+                    e.event.cancelBubble = true
+                    this.$bus.$emit('getChart',{name:this.$options.name,title:this.title,chartData:this.chartData,other:this.other || ''})
+                })
             }
         },
     },

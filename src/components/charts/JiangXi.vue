@@ -26,7 +26,7 @@ export default {
             }
         }
     },
-    props:['title','chartData'],
+    props:['title','chartData','isTop'],
     watch:{
         chartData(){
             this.setChart().then(value=>{
@@ -104,7 +104,7 @@ export default {
     methods:{
         setChart(){
             return new Promise((resolve,reject)=>{
-                axios.get('https://geo.datav.aliyun.com/areas_v3/bound/360000_full.json').then(
+                axios.get('http://xump.cn/datav/jiangxi').then(
                     res=>{
                         resolve(res.data)
                     },
@@ -176,7 +176,11 @@ export default {
                         ]
                     })
                 )
-                option && this.myChart.setOption(option)
+                option && this.myChart.setOption(option);
+                this.myChart.on('click',(e)=>{
+                    e.event.cancelBubble = true
+                    this.$bus.$emit('getChart',{name:this.$options.name,title:this.title,chartData:this.chartData,other:this.other || ''})
+                })
         })
         }
     }
