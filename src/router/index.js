@@ -7,6 +7,16 @@ import GraphicBox3 from '../components/GraphicBox3'
 const router = new VueRouter({
     routes:[
         {
+            path: '/',
+            redirect: {
+                name: 'chapter1', // 重定向到名为 'chapter1' 的路由
+                query: {
+                    title: '毕业生就业基本情况',
+                    position: 'column'
+                }
+            }
+        },        
+        {
             name:'chapter1',
             path:'/part1',
             component:GraphicBox1,

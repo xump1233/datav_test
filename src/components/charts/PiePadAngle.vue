@@ -42,7 +42,9 @@ export default {
                 let option = {
                     title:{
                         text:this.title,
-                        left:'center'
+                        left:'center',
+                        top:this.isTop?'2%':'-1%',
+                        // textStyle:this.isTop?{color:'#000'}:{color:'#fff'}
                     },
                     tooltip: {
                         trigger: 'item',
@@ -51,9 +53,10 @@ export default {
                         }
                     },
                     legend: {
-                        top: '5%',
-                        left: 'left',
+                        top: '10%',
+                        left: this.isTop?50:60,
                         orient: 'vertical',
+                        // textStyle:this.isTop?{color:'black'}:{color:'white'}
                     },
                     series: [
                         {
@@ -72,7 +75,7 @@ export default {
                         emphasis: {
                             label: {
                             show: true,
-                            fontSize: 16,
+                            fontSize: this.isTop?30:16,
                             fontWeight: 'bold'
                             }
                         },
@@ -98,8 +101,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height:400px
-}
+
 </style>

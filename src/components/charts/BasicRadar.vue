@@ -46,10 +46,9 @@ export default {
                 let option = {
                     title: {
                         text: this.title.length>8?this.title.substring(0,8)+'\n'+this.title.substring(8,this.title.length):this.title,
-                        left:'left',
-                        textStyle:{
-                            fontSize:16
-                        }
+                        left:this.isTop?50:'left',
+                        top:this.isTop?50:'',
+                        // textStyle:this.isTop?{fontSize:30,color:'#000'}:{fontSize:16,color:'#fff'}
                     },
                     tooltip:{
                         trigger:'item'
@@ -59,9 +58,9 @@ export default {
                         // shape: 'circle',
                         indicator: this.getChart,
                         axisName: {
-                            color: 'black',
+                            // color: '#fff',
                             fontWeight:'',
-                            fontSize:10
+                            fontSize:this.isTop?16:10
                         },
                     },
                     grid:{
@@ -97,8 +96,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width: 420px;
-    height: 400px;
-}
+
 </style>

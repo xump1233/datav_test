@@ -1,5 +1,5 @@
 <template>
-  <div ref="bar" class="container"></div>
+  <div ref="bar"></div>
 </template>
 
 <script>
@@ -47,10 +47,12 @@ export default {
                     let option = {
                         title:{
                             text:this.title,
-                            left:"center"
+                            left:"center",
+                            // textStyle:this.isTop?{fontSize:30}:{color:'white'}
                         },
                         tooltip: {
                             trigger: 'item',
+                            formatter: "{b}<br/>{c}人",
                             axisPointer: {
                                 type: 'shadow'
                             }
@@ -61,42 +63,71 @@ export default {
                                 radius:'20%',
                                 center:["17%","27%"],
                                 data:this.formatData[0],
-                                type:'pie'
+                                type:'pie',
+                                label:{
+                                    show:this.isTop
+                                },
+                                title: {
+                                    text: 'xxhh',
+                                    left: '50%', 
+                                    top:'50%',
+                                    textStyle: {
+                                        fontSize: 32, 
+                                        color:'white'
+                                    },
+                                    
+                                }
                             },
                             {
                                 name:this.chartData[1].title,
                                 type:'pie',
                                 radius:'20%',
                                 center:["51%","27%"],
-                                data:this.formatData[1]
+                                data:this.formatData[1],
+                                label:{
+                                    show:this.isTop
+                                }
                             },
                             {
                                 name:this.chartData[2].title,
                                 radius:'20%',
                                 center:["83%","27%"],
                                 data:this.formatData[2],
-                                type:'pie'
+                                type:'pie',
+                                label:{
+                                    show:this.isTop
+                                }
                             },
                             {
                                 name:this.chartData[3].title,
                                 radius:'20%',
                                 center:["17%","65%"],
                                 data:this.formatData[3],
-                                type:'pie'
+                                type:'pie',
+                                label:{
+                                    show:this.isTop
+                                }
                             },
                             {
                                 name:this.chartData[4].title,
                                 radius:'21`%',
                                 center:["51%","65%"],
                                 data:this.formatData[4],
-                                type:'pie'
+                                type:'pie',
+                                label:{
+                                    show:this.isTop
+                                }
                             },
                             {
                                 name:this.chartData[5].title,
                                 radius:'20%',
                                 center:["83%","65%"],
                                 data:this.formatData[5],
-                                type:'pie'
+                                type:'pie',
+                                label:{
+                                    show:this.isTop
+                                },
+                                
                             },
                         ]
                     }
@@ -121,8 +152,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:800px;
-    height: 600px;
-}
+
 </style>

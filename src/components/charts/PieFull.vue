@@ -43,22 +43,27 @@ export default {
                 let option = {
                     title:{
                         text:this.title,
-                        left:"center"
+                        left:"center",
+                        // textStyle:this.isTop?{color:'#000',fontSize:20}:{color:'#fff'}
                     },
                     tooltip:{
                         trigger:'item'
                     },
-                    // legend:{
-                    //     orient:'vertical',
-                    //     left:'left'
-                    // },
+                    legend:{
+                        show:this.isTop,
+                        orient:'vertical',
+                        left:'left'
+                    },
                     series:[
                         {
                             name:this.title,
                             type:'pie',
                             redius:'50%',
-                            center:['50%','50%'],
+                            center:['50%','52%'],
                             data:this.formatData,
+                            label:{
+                                show:this.isTop
+                            },
                             emphasis:{
                                 itemStyle:{
                                     shadowBlur: 10,
@@ -84,8 +89,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height:400px
-}
+
 </style>

@@ -40,6 +40,7 @@ export default {
                     title: {
                         text: this.title,
                         left:'center',
+                        // textStyle:this.isTop?{fontSize:20,color:'#000'}:{color:'#fff'}
                     },
                     tooltip: {
                         trigger: 'item',
@@ -56,7 +57,8 @@ export default {
                         show:true,
                         left:'left',
                         orient: 'vertical',
-                        data: this.formatData[0]
+                        data: this.formatData[0],
+                        // textStyle:this.isTop?{}:{color:'#fff'}
                     },
                     series: [
                         {
@@ -74,7 +76,7 @@ export default {
                         sort: 'descending',
                         gap: 3,
                         label: {
-                            show: false,
+                            show: this.isTop,
                             position: 'inside',
                             itemStyle:{
                                 
@@ -116,8 +118,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height: 400px;
-}
+
 </style>

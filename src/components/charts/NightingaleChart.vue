@@ -36,8 +36,8 @@ export default {
                 let option = {
                     title: {
                         text: this.title,
-
-                        left: 'center'
+                        left: 'center',
+                        // textStyle:this.isTop?{}:{color:'white'}
                     },
                     tooltip: {
                         trigger: 'item',
@@ -46,6 +46,7 @@ export default {
                     legend: {
                         show:true,
                         left: 'left',
+                        // textStyle:this.isTop?{}:{color:'white'},
                         top: '20',
                         orient: 'vertical',
                         data: this.formatData.map(item=>item.name)
@@ -63,12 +64,11 @@ export default {
                         {
                         name: this.title,
                         type: 'pie',
-                        roma:true,
-                        radius: [30, 150],
-                        center: ['50%', '65%'],
+                        radius: this.isTop?[50, 200]:[30,150],
+                        center: this.isTop?['45%','55%']:['48%', '68%'],
                         label:{
-                            position:'inside',
-                            show:false
+                            position:'outside',
+                            show:this.isTop
                         },
                         roseType: 'area',
                         itemStyle: {
@@ -94,8 +94,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height:400px
-}
+
 </style>

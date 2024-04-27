@@ -29,7 +29,6 @@
           :chartData="getIndex(n,m).data" 
           :title="getIndex(n,m).childrenName" 
           :other="JSON.parse(getIndex(n,m).other)"  
-          class="addBorder"
           />
         </template>
       </div>
@@ -293,9 +292,10 @@ export default {
   width: 100%;
 }
 .addBorder{
-  /* border:1px solid skyblue; */
-  /* margin:10 0px; */
-
+  border:1px solid skyblue;
+  background-color: rgb(255, 255, 255,0.5);
+  border-radius:10px ;
+  box-shadow: 0px 0px 5px 0px #888888;
 }
 .box{
   display: flex;

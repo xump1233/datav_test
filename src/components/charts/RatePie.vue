@@ -81,7 +81,7 @@ export default {
                         top: "middle",
                         right: "5%",
                         textStyle: {
-                            color: '#f2f2f2',
+                            color: '#666',
                             fontSize: 25,
                         },
                         icon: 'roundRect'
@@ -101,10 +101,10 @@ export default {
                                 length: 15,
                                 length2: 120,
                                 lineStyle: {
-                                    color: '#d3d3d3'
+                                    color: '#fff'
                                 },
                                 align: 'right',
-                                color: "#000",
+                                // color: "#fff",
                                 emphasis: {
                                     labelLine: {
                                         show: true
@@ -147,7 +147,7 @@ export default {
                                     },
                                     nameStyle: {
                                         fontSize: 10,
-                                        color: "#555",
+                                        // color: "#fff",
                                         align: 'left'
                                     },
                                     rate: {
@@ -214,11 +214,11 @@ export default {
 
 <style scoped>
 .container{
-    width: 200px!important;
-    height: 200px!important;
+    width: 20%!important;
+    height: 20%!important;
     position: absolute;
-    left: 380px;
-    top:250px;
+    left: 20%;
+    top:35%;
     z-index: 2;
 }
 </style>

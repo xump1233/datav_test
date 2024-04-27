@@ -42,7 +42,8 @@ export default {
                 let option = {
                     title:{
                         text:this.title,
-                        left:'center'
+                        left:'center',
+                        // textStyle:this.isTop?{}:{color:'#fff'}
                     },
                     tooltip: {
                         trigger: 'item'
@@ -50,7 +51,7 @@ export default {
                     legend: {
                         top: '20%',
                         left: 'center',
-
+                        // textStyle:this.isTop?{color:'#000'}:{color:'#fff'}
                     },
                     series: [
                         {
@@ -81,8 +82,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width: 400px;
-    height:400px
-}
+
 </style>

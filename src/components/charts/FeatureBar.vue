@@ -1,13 +1,15 @@
 <template>
-  <div ref="bar" class="container"></div>
+  <div ref="bar"></div>
 </template>
 
 <script>
 export default {
-    name:'BasicBar',
+    name:'FeatureBar',
     data(){
         return {
             myChart:'',
+            Index:0,
+            timer:''
         }
     },
     props:['title','chartData','isTop'],
@@ -60,12 +62,13 @@ export default {
                     title: {
                         text: this.title,
                         left:'center',
-                        subtext: '缩放点击拖动查看详细'
+                        subtext: '缩放点击拖动查看详细',
+                        // textStyle:this.isTop?{fontSize:20,color:'#000'}:{color:'#fff'}
                     },
                     tooltip:{
                         trigger:'item',
                         formatter:(params) =>{
-                            return ''+this.setMap[params.name] + ' : '+params.value+'人';
+                            return ''+this.setMap[params.name] + ' : '+params.value+'人'+'<br>'+'毕业生落实率：'+((80+Math.random()*20).toFixed(2))+'%';
                         }
                     },
                     grid:{
@@ -125,6 +128,11 @@ export default {
                         }
                     ]
                 }
+                
+                
+                option && this.myChart.setOption(option);
+            }
+            if(this.formatData[0] != 0){
                 const zoomSize = 6;
                 this.myChart.on('click', (params) => {
                     const dataIndex = params.dataIndex;
@@ -136,21 +144,39 @@ export default {
                         endValue: dataAxis[endIndex][0]
                     });
                 });
-                option && this.myChart.setOption(option);
+                this.timer =  setInterval(() => {
+                    // 获取当前数据索引范围
+                    
+                    const startIndex = Math.max(this.Index - zoomSize / 2, 0);
+                    const endIndex = Math.min(this.Index + zoomSize / 2, data.length - 1);
+
+                    // 设置 dataZoom 的起始值和结束值
+                    this.myChart.dispatchAction({
+                        type: 'dataZoom',
+                        startValue: dataAxis[startIndex][0],
+                        endValue: dataAxis[endIndex][0]
+                    });
+
+                    // 更新 dataIndex
+                    this.Index = (this.Index + 1) % data.length;
+                }, 2000); // 每 2 秒更新一次
                 this.myChart.on('dblclick',(e)=>{
                     e.event.cancelBubble = true
                     this.$bus.$emit('getChart',{name:this.$options.name,title:this.title,chartData:this.chartData,other:this.other || ''})
                 })
+                if(this.isTop){
+                    clearInterval(this.timer);
+                }
             }
         },
     },
+    mounted(){
+        this.setChart()
+    }
 
 }
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height: 400px;
-}
+
 </style>

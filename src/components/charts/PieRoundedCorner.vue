@@ -1,5 +1,5 @@
 <template>
-  <div ref="pie1" class="container">
+  <div ref="pie1">
 
   </div>
 </template>
@@ -44,9 +44,8 @@ export default {
                     title:{
                         text:this.title,
                         left:'center',
-                        textStyle:{
-                            fontSize:16
-                        }
+                        top:this.isTop?'2%':'-1%',
+                        // textStyle:this.isTop?{color:'black'}:{fontSize:16,color:'white'}
                     },
                     tooltip: {
                         trigger: 'item',
@@ -55,10 +54,11 @@ export default {
                         }
                     },
                     legend: {
-                        show:this.formatData.length>6?false:true,
+                        show:this.formatData.length<=6 || this.isTop?true:false,
                         top: '5%',
-                        left: 'right',
+                        left: this.isTop?'50':'75%',
                         orient: 'vertical',
+                        // textStyle:this.isTop?{}:{color:'white'}
                     },
                     series: [
                         {
@@ -78,7 +78,7 @@ export default {
                         emphasis: {
                             label: {
                             show: true,
-                            fontSize: 16,
+                            fontSize: this.isTop?30:16,
                             fontWeight: 'bold'
                             }
                         },
@@ -104,8 +104,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height:400px
-}
+
 </style>

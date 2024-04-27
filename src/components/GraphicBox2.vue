@@ -295,6 +295,9 @@ export default {
 .addBorder{
   /* border:1px solid skyblue; */
   /* margin:10 0px; */
+  border:1px solid skyblue;
+  background-color: rgb(255, 255, 255,0.7);
+  border-radius:10px ;
 
 }
 .box{

@@ -41,7 +41,9 @@ export default {
                 let option = {
                     title:{
                         text:this.title,
-                        subtext:'xxhh',
+                        subtext:`22个少数民族，人数占总体的3%`,
+                        // textStyle:this.isTop?{}:{color:'white'},
+                        subtextStyle:{color:"#faf"}
                     },
                     tooltip:{
                         trigger:'item',
@@ -91,8 +93,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:500px;
-    height: 300px;
-}
+
 </style>

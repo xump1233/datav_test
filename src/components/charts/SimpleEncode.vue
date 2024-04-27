@@ -1,5 +1,5 @@
 <template>
-  <div ref="bar" class="container"></div>
+  <div ref="bar"></div>
 </template>
 
 <script>
@@ -45,7 +45,8 @@ export default {
                 let option = {
                     title:{
                         text:this.title,
-                        left:'center'
+                        left:'center',
+                        // textStyle:this.isTop?{}:{color:'white'}
                     },
                     dataset: {
                         source: this.formatData
@@ -55,14 +56,15 @@ export default {
                         left:'0'
                     },
 
-                    xAxis: { name: '总计' },
-                    yAxis: { type: 'category' },
+                    xAxis: { name: '总计',/*axisLabel:{color:'white'} */},
+                    yAxis: { type: 'category',/*axisLabel:{color:'white'}*/ },
                     visualMap: {
                         orient: 'horizontal',
                         left: 'center',
                         min: 0,
                         max: 50,
                         text: ['较多', '较少'],
+                        textStyle:{color:'white'},
                         // Map the score column to color
                         dimension: 0,
                         inRange: {
@@ -97,8 +99,5 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    width:400px;
-    height:400px
-}
+
 </style>

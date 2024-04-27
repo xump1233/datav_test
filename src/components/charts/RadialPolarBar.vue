@@ -1,5 +1,5 @@
 <template>
-  <div ref="bar" class="container"></div>
+  <div ref="bar"></div>
 </template>
 
 <script>
@@ -36,10 +36,12 @@ export default {
                 this.myChart.hideLoading();
                 let option = {
                     title: [
-                        {
+                    {
                         text: this.title,
-                        left:'left'
-                        }
+                        left:this.isTop?'50':'30',
+                        top:this.isTop?'50':'20',
+                        // textStyle:this.isTop?{fontSize:30}:{color:'white'}
+                    }
                     ],
                     polar: {
                         radius: [20, '75%']
@@ -84,9 +86,6 @@ export default {
 </script>
 
 <style scoped>
- .container{
-    width:400px;
-    height:400px
- }
+
 </style>
 

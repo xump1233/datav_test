@@ -22,7 +22,13 @@ export default {
             const result = [[],[]]
             if(this.chartData){
                 for(let key in this.chartData){
-                    result[0].push(key)
+                    if(this.isTop){
+                        result[0].push(key)
+                    }
+                    else{
+                        result[0].push(key.length>5?key.substring(0,4)+'...':key)
+                    }
+                    
                     result[1].push(this.chartData[key])
                 }
             }
@@ -49,9 +55,7 @@ export default {
                     title:{
                         text:this.title,
                         left:"center",
-                        textStyle:{
-                            fontSize:16
-                        }
+                        // textStyle:this.isTop?{fontSize:30,color:'#000'}:{fontSize:16,color:'#fff'}
                     },
                     grid: {
                         // 设置左边偏移量为容器宽度的 20%
@@ -59,7 +63,7 @@ export default {
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
-                        type: 'shadow'
+                            type: 'shadow'
                         }
                     },
                     yAxis:{
@@ -71,7 +75,8 @@ export default {
                         axisLabel: { 
                             interval: 0, rotate: this.yAxisLength ,
                             textStyle:{
-                                fontSize:10
+                                fontSize:10,
+                                // color:this.isTop?'#000':'#fff'
                             }
                         }
                     },
@@ -98,8 +103,6 @@ export default {
 
 <style scoped>
 .container{
-    width:400px;
-    height: 400px;
     padding:100px,0;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="oneTip" v-show="isShow" @click="dian">
-    <component :is="myChart" :title="title" :chartData="chartData" :other="other" :isTop="true"></component>
+    <component :is="myChart" :title="title" :chartData="chartData" :other="other" :isTop="true" class="topChart" :isOther="isOther"></component>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
             myChart:'',
             title:'',
             chartData:[],
-            other:[]
+            other:[],
+            isOther:''
         }
     },
     components:{
@@ -57,11 +58,13 @@ export default {
     },
     mounted(){
         this.$bus.$on('getChart',(chartDataList)=>{
-            this.myChart = chartDataList.name
-            this.title = chartDataList.title
-            this.chartData = chartDataList.chartData
-            this.other = chartDataList.other || ''
-            this.isShow = true
+          console.log(chartDataList)
+          this.myChart = chartDataList.name
+          this.title = chartDataList.title
+          this.chartData = chartDataList.chartData
+          this.other = chartDataList.other || ''
+          this.isShow = true
+          this.isOther = chartDataList.isOther || false
         })
     }
 }
@@ -72,7 +75,8 @@ export default {
     position: absolute;
     width:100%;
     height:100%;
-    background-color: rgb(102, 102, 102,0.5);
+    /* background-color: rgb(102, 102, 102,0.5); */
+    background-color: rgb(255, 255, 255,0.5);
     left: 0;
     top: 0;
     display: flex;
@@ -83,6 +87,14 @@ export default {
   .oneTip>div{
     width:80%;
     height:80%;
+    /* background-color: rgb(255, 255, 255,0.5); */
+    background-color: skyblue;
+    border-radius: 20px;
     /* background-color: #fff; */
+  }
+  .topChart{
+    width: 100%;
+    height: 100%;
+    margin: 20% 10%;
   }
 </style>

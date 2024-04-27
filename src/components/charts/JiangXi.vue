@@ -64,6 +64,9 @@ export default {
                             calculable: true,
                             inRange: {
                             color: ['lightskyblue', 'yellow', 'orangered']
+                            },
+                            textStyle:{
+                                color:'black'
                             }
                         },
                         series:[
@@ -133,11 +136,14 @@ export default {
                 this.myChart.setOption(
                     (option = {
                         title:{
-                            text:this.title
+                            text:this.title,
+                            left:this.isTop?50:0,
+                            top:this.isTop?50:0,
+                            // textStyle:this.isTop?{color:'#000',fontSize:30}:{color:'#fff'}
                         },
                         tooltip:{
                             trigger:'item',
-                            formatter:'{b}<br/>{c}'
+                            formatter:'{b}<br/>{c}人'
                         },
                         toolbox:{
                             show:false,
@@ -152,13 +158,15 @@ export default {
                         visualMap:{
                             min: 0,
                             max: 1000,
+                            left:10,
                             text: ['人数较多', '人数较少'],
+                            textStyle:{color:'#666'},
                             realtime: false,
                             itemWidth: 10,
                             itemHeight: 70,
                             calculable: true,
                             inRange: {
-                            color: ['lightskyblue', 'yellow', 'orangered']
+                                color: ['lightskyblue', 'yellow', 'orangered']
                             }
                         },
                         series:[

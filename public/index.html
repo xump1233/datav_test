@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>智教可视化</title>
     <style>
       body,html{
         margin:0;
@@ -19,4 +19,20 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    let isChange = true;
+    let rate;
+    function getRate(w,h){
+      isChange = false
+      return w/h;
+    }
+    window.onload = ()=>{
+      rate = getRate(document.body.offsetWidth,document.body.offsetHeight)
+    }
+    window.addEventListener('resize', function(event){
+
+      console.log(document.body.offsetWidth)
+      document.body.style.height = document.body.offsetWidth/rate
+    });
+  </script>
 </html>
