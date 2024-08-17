@@ -1,10 +1,5 @@
 <template>
   <div class="container" ref="container">
-    <!-- <h1 style="width:100%">{{title}}</h1> -->
-    <!-- <template v-for="item in dataList">
-      <component v-if="item.isParent === 0 && item.data" :is="item.type" :key="item.id" :chartData="item.data" :title="item.childrenName" :other="JSON.parse(item.other)"  class="addBorder"/>
-    </template>
-    <PieSet v-if="childList.length != 0 " :chartData="formatChild" title="毕业生去向分布" class="addBorder"/> -->
     <template v-for="n in maxRow">
       <div v-if="myPosition === 'column'" :key="n" :style="{height:getIndex(n,1).position[3]+'%',width:100+'%'}" class="box">
         <template v-for="m in getMaxColumn(n)">
