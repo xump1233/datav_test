@@ -107,7 +107,7 @@ export default {
     methods:{
         setChart(){
             return new Promise((resolve,reject)=>{
-                axios.get('http://xump.cn/datav/jiangxi').then(
+                axios.get('https://xump.cn/datavApi/datav/jiangxi').then(
                     res=>{
                         resolve(res.data)
                     },

@@ -196,7 +196,7 @@ export default {
     setChart() {
       return new Promise((resolve, reject) => {
         axios
-          .get("http://xump.cn/datav/china")
+          .get("https://xump.cn/datavApi/datav/china")
           .then(
             (res) => {
               resolve(res.data);
